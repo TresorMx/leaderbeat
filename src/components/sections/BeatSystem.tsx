@@ -110,7 +110,7 @@ export function BeatSystem() {
 
         <div className="grid md:grid-cols-12 gap-10 md:gap-12 items-start">
           <Reveal delay={0.05} className="md:col-span-5">
-            <h2 className="display-xl">
+            <h2 className="display-md">
               BEAT<span className="text-bronze">.</span>
             </h2>
             <p className="mt-8 max-w-md text-cream/65 text-[17px] leading-relaxed">

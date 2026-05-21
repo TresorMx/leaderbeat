@@ -57,7 +57,7 @@ export function Closing() {
         </motion.div>
 
         {/* Headline cinematográfica */}
-        <motion.h2 style={{ y, opacity }} className="display-xl max-w-[20ch]">
+        <motion.h2 style={{ y, opacity }} className="display-md max-w-[20ch]">
           {headline.map((line, i) => (
             <motion.span
               key={i}

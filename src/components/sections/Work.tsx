@@ -72,7 +72,7 @@ export function Work() {
                 <span className="w-8 h-px bg-bronze" />
                 <span className="eyebrow !tracking-[0.25em]">04 — Trabajo seleccionado</span>
               </div>
-              <h2 className="display-lg max-w-[16ch]">
+              <h2 className="display-md max-w-[16ch]">
                 Lo que ocurre cuando BEAT{" "}
                 <em className="not-italic text-bronze font-normal">está instalado.</em>
               </h2>

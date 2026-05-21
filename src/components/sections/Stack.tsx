@@ -46,7 +46,7 @@ export function Stack() {
               <span className="w-8 h-px bg-bronze" />
               <span className="eyebrow !tracking-[0.25em]">05 — Herramientas</span>
             </div>
-            <h2 className="display-lg max-w-[12ch]">
+            <h2 className="display-md max-w-[12ch]">
               No inventamos herramientas.{" "}
               <em className="not-italic text-bronze">Las dominamos.</em>
             </h2>

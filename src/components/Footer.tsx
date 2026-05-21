@@ -10,9 +10,12 @@ export function Footer() {
               Leaderbeat<span className="text-bronze">.io</span>
             </div>
             <p className="mt-6 max-w-md text-cream/70 leading-relaxed text-[15px]">
-              El sistema operativo comercial de las marcas inmobiliarias modernas.
-              Construimos marca, proceso y tecnología discreta para que la venta
-              ocurra sola.
+              Agencia de marketing digital especializada en proyectos
+              inmobiliarios. Construimos marca, proceso y tecnología discreta
+              para que la venta ocurra sola.
+            </p>
+            <p className="mt-3 text-[12px] tracking-[0.12em] uppercase text-cream/30">
+              Cancún, Quintana Roo · México · US Hispanic
             </p>
           </div>
 
@@ -37,7 +40,7 @@ export function Footer() {
 
         <div className="mt-20 pt-6 border-t border-cream/10 flex flex-col md:flex-row items-start md:items-center justify-between gap-4">
           <div className="text-xs text-cream/40 tracking-wider">
-            © {new Date().getFullYear()} LEADERBEAT.IO — Todos los derechos reservados.
+            © {new Date().getFullYear()} LEADERBEAT.IO — Agencia de Marketing Digital · Cancún, México
           </div>
           <div className="flex gap-6 text-xs text-cream/40">
             <Link href="/legal" className="hover:text-cream/80 transition-colors">Aviso legal</Link>

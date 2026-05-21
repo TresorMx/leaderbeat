@@ -28,7 +28,7 @@ export function WhoFor() {
         </Reveal>
 
         <Reveal delay={0.05}>
-          <h2 className="display-lg max-w-[16ch]">
+          <h2 className="display-md max-w-[16ch]">
             No trabajamos con todo el mundo.{" "}
             <em className="not-italic text-bronze">Por eso funciona.</em>
           </h2>
