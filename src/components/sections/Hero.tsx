@@ -80,9 +80,9 @@ export function Hero() {
           }}
           className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10"
         >
-          <p className="max-w-sm text-cream/65 text-[15px] md:text-[17px] leading-relaxed">
-            Construimos las marcas, los procesos y la tecnología que cierran
-            ventas mientras tu competencia todavía piensa en encender pauta.
+          <p className="text-cream/65 text-[15px] md:text-[17px] leading-relaxed md:max-w-[44ch]">
+            Construimos las marcas, los procesos y la tecnología que cierran ventas
+            <br className="hidden md:block" /> mientras tu competencia todavía piensa en encender pauta.
           </p>
 
           <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
@@ -113,7 +113,7 @@ export function Hero() {
           </span>
           Operando · Proyectos activos
         </div>
-        <div className="hidden sm:block">Cali · Medellín · México · US Hispanic</div>
+        <div className="hidden sm:block">Cancún · México · US Hispanic</div>
         <div className="hidden md:block">Scroll ↓</div>
       </motion.div>
     </section>

@@ -9,7 +9,7 @@ import { Stack } from "@/components/sections/Stack";
 import { WhoFor } from "@/components/sections/WhoFor";
 import { Application } from "@/components/sections/Application";
 import { Closing } from "@/components/sections/Closing";
-import { WhatsAppButton } from "@/components/ui/WhatsAppButton";
+import { MobileBar } from "@/components/ui/MobileBar";
 
 const WHATSAPP_PHONE = "573000000000"; // Solo dígitos con código de país
 
@@ -29,7 +29,7 @@ export default function Home() {
         <Closing />
       </main>
       <Footer />
-      <WhatsAppButton phone={WHATSAPP_PHONE} />
+      <MobileBar phone={WHATSAPP_PHONE} />
     </>
   );
 }
