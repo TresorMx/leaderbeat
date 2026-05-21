@@ -37,16 +37,22 @@ export function WhoFor() {
         <div className="mt-14 md:mt-16 grid md:grid-cols-2 gap-6">
           {/* Sí */}
           <Reveal delay={0.1}>
-            <div className="rounded-2xl bg-ink text-cream p-8 md:p-10 h-full">
-              <div className="flex items-center gap-3 mb-8">
-                <div className="w-8 h-8 rounded-full bg-bronze flex items-center justify-center text-[14px] font-bold text-ink">
+            <div className="relative rounded-2xl p-8 md:p-10 h-full overflow-hidden bg-gradient-to-br from-[#1a1a2e] via-[#16213e] to-[#0f0f23] border border-[#2a2a4a]">
+              {/* Subtle violet glow */}
+              <div
+                aria-hidden
+                className="pointer-events-none absolute top-0 right-0 w-1/2 h-1/2 rounded-full opacity-20 blur-3xl"
+                style={{ background: "radial-gradient(circle, #6C63FF 0%, transparent 70%)" }}
+              />
+              <div className="relative flex items-center gap-3 mb-8">
+                <div className="w-8 h-8 rounded-full bg-bronze flex items-center justify-center text-[14px] font-bold text-white">
                   ✓
                 </div>
-                <span className="font-display font-bold text-[17px]">Es para ti si</span>
+                <span className="font-display font-bold text-[17px] text-white">Es para ti si</span>
               </div>
-              <ul className="space-y-4">
+              <ul className="relative space-y-4">
                 {fit.map((item) => (
-                  <li key={item} className="flex items-start gap-3 text-[15px] text-cream/75 leading-snug">
+                  <li key={item} className="flex items-start gap-3 text-[15px] text-white/70 leading-snug">
                     <span className="w-1.5 h-1.5 rounded-full bg-bronze mt-2 shrink-0" />
                     {item}
                   </li>

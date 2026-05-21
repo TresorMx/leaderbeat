@@ -95,8 +95,8 @@ export function Process() {
                   onClick={() => setActive(i)}
                   className={`relative text-left p-4 md:p-5 rounded-xl border transition-all duration-400 ${
                     isActive
-                      ? "border-bronze bg-ink text-cream shadow-[0_4px_24px_rgba(108,99,255,0.2)]"
-                      : "border-line/60 bg-cream hover:border-bronze/40 hover:bg-cream"
+                      ? "border-bronze/60 bg-gradient-to-br from-[#1a1a2e] to-[#0f0f23] text-cream shadow-[0_4px_24px_rgba(108,99,255,0.18)]"
+                      : "border-line/60 bg-gradient-to-br from-white to-[#f8f8fd] hover:border-bronze/30 hover:shadow-sm"
                   }`}
                 >
                   {/* Progress dot */}
@@ -120,7 +120,7 @@ export function Process() {
 
         {/* Content panel */}
         <Reveal delay={0.15}>
-          <div className="mt-6 md:mt-8 rounded-2xl border border-line/60 bg-cream overflow-hidden">
+          <div className="mt-6 md:mt-8 rounded-2xl border border-line/60 bg-gradient-to-br from-white to-[#f8f8fd] overflow-hidden shadow-sm">
             <AnimatePresence mode="wait">
               <motion.div
                 key={active}

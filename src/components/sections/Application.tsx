@@ -68,7 +68,8 @@ export function Application() {
   if (formState.kind === "success") {
     return (
       <section id="contacto" className="section-y bg-ink text-cream">
-        <div className="container-edge flex flex-col items-center text-center max-w-lg mx-auto">
+        <div className="container-edge">
+        <div className="flex flex-col items-center text-center max-w-lg mx-auto">
           <motion.div
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
@@ -94,6 +95,7 @@ export function Application() {
             {formState.message}
           </motion.p>
         </div>
+        </div>
       </section>
     );
   }
@@ -101,28 +103,29 @@ export function Application() {
   return (
     <section id="contacto" className="section-y bg-ink text-cream">
       <div className="container-edge">
-        {/* Header */}
-        <div className="grid md:grid-cols-2 gap-10 mb-12 md:mb-14">
+        {/* Header — centered */}
+        <div className="text-center max-w-xl mx-auto mb-12 md:mb-14">
           <Reveal>
-            <div className="flex items-center gap-3 mb-6">
+            <div className="flex items-center justify-center gap-3 mb-6">
               <span className="w-8 h-px bg-bronze" />
               <span className="eyebrow !text-cream/50 !tracking-[0.25em]">07 — Aplicación</span>
+              <span className="w-8 h-px bg-bronze" />
             </div>
             <h2 className="display-lg">
               Solicita tu{" "}
               <em className="not-italic text-bronze">diagnóstico.</em>
             </h2>
           </Reveal>
-          <Reveal delay={0.08} className="flex flex-col justify-end">
-            <p className="text-cream/50 text-[15px] leading-relaxed">
-              30 minutos. Sin costo. Te devolvemos un diagnóstico real de tu operación y cómo el sistema BEAT te ayudaría a cerrar más.
+          <Reveal delay={0.08}>
+            <p className="mt-5 text-cream/50 text-[15px] leading-relaxed">
+              30 minutos. Sin costo. Te devolvemos un diagnóstico real y cómo BEAT te ayudaría a cerrar más.
             </p>
           </Reveal>
         </div>
 
-        {/* Card */}
+        {/* Card — centered */}
         <Reveal delay={0.12}>
-          <div className="max-w-2xl rounded-2xl border border-line-dark/60 bg-ink-soft overflow-hidden">
+          <div className="max-w-2xl mx-auto rounded-2xl border border-line-dark/60 bg-ink-soft overflow-hidden">
             {/* Progress bar */}
             <div className="h-1 bg-line-dark/50">
               <motion.div

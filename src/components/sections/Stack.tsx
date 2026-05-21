@@ -5,112 +5,109 @@ import { Reveal } from "@/components/ui/Reveal";
 const categories = [
   {
     label: "CRM",
-    color: "bg-violet-50 text-violet-700 border-violet-200",
-    dot: "bg-violet-400",
     items: ["HubSpot", "Salesforce", "Pipedrive"],
+    description: "Donde vive el pipeline y la relación con el lead.",
   },
   {
     label: "Automatización",
-    color: "bg-blue-50 text-blue-700 border-blue-200",
-    dot: "bg-blue-400",
     items: ["n8n", "Zapier", "Make"],
+    description: "Los flujos que mueven datos sin que nadie los toque.",
   },
   {
     label: "Pauta digital",
-    color: "bg-orange-50 text-orange-700 border-orange-200",
-    dot: "bg-orange-400",
     items: ["Meta Ads", "Google Ads", "TikTok Ads", "YouTube"],
+    description: "Captación full-funnel en los canales donde vive el comprador.",
   },
   {
     label: "Analítica",
-    color: "bg-green-50 text-green-700 border-green-200",
-    dot: "bg-green-400",
     items: ["GA4", "Looker Studio", "Metabase"],
+    description: "Visibilidad real sobre qué funciona y qué no.",
   },
   {
     label: "Conversacional",
-    color: "bg-emerald-50 text-emerald-700 border-emerald-200",
-    dot: "bg-emerald-400",
     items: ["WhatsApp Business API", "Twilio", "Agentes propios"],
+    description: "El primer contacto automatizado que califica antes de despertar al broker.",
   },
   {
     label: "Diseño",
-    color: "bg-pink-50 text-pink-700 border-pink-200",
-    dot: "bg-pink-400",
     items: ["Figma", "Adobe CC"],
+    description: "Donde la marca cobra forma visual.",
   },
 ];
 
 export function Stack() {
   return (
-    <section className="section-y bg-ink text-cream overflow-hidden">
-      {/* Violet orb */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-1/2 right-0 w-[40vw] h-[40vw] rounded-full opacity-[0.07] blur-3xl"
-        style={{ background: "radial-gradient(circle, #6C63FF 0%, transparent 70%)" }}
-      />
-
-      <div className="container-edge relative">
-        <Reveal>
-          <div className="flex items-center gap-3 mb-10">
-            <span className="w-8 h-px bg-bronze" />
-            <span className="eyebrow !text-cream/50 !tracking-[0.25em]">05 — Herramientas</span>
-          </div>
-        </Reveal>
-
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-14 md:mb-16">
-          <Reveal delay={0.05}>
-            <h2 className="display-lg max-w-[14ch]">
-              El stack que{" "}
-              <em className="not-italic text-bronze">nos respalda.</em>
+    <section className="section-y bg-cream text-graphite overflow-hidden">
+      <div className="container-edge">
+        {/* Header row */}
+        <div className="grid md:grid-cols-2 gap-10 md:gap-16 items-end mb-14 md:mb-16">
+          <Reveal>
+            <div className="flex items-center gap-3 mb-8">
+              <span className="w-8 h-px bg-bronze" />
+              <span className="eyebrow !tracking-[0.25em]">05 — Herramientas</span>
+            </div>
+            <h2 className="display-lg max-w-[12ch]">
+              No inventamos herramientas.{" "}
+              <em className="not-italic text-bronze">Las dominamos.</em>
             </h2>
           </Reveal>
-
-          <Reveal delay={0.1}>
-            <p className="text-cream/50 text-[15px] max-w-xs leading-relaxed">
-              No inventamos herramientas. Dominamos las mejores y las conectamos para que trabajen juntas.
+          <Reveal delay={0.08}>
+            <p className="text-mute text-[15px] leading-relaxed max-w-sm">
+              Trabajamos con el stack del cliente o instalamos el que mejor se adapta al proyecto. Lo que no negociamos es que todo esté conectado.
             </p>
           </Reveal>
         </div>
 
-        {/* Cards grid */}
-        <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        {/* Editorial list */}
+        <div className="border-t border-line/50">
           {categories.map((cat, i) => (
-            <Reveal key={cat.label} delay={0.06 + i * 0.05}>
-              <div className="rounded-xl bg-ink-soft border border-line-dark/60 p-6 hover:border-bronze/30 transition-colors duration-300">
-                {/* Category label */}
-                <div className="flex items-center gap-2 mb-4">
-                  <span className={`w-2 h-2 rounded-full ${cat.dot}`} />
-                  <span className="eyebrow !text-cream/40 !tracking-[0.2em]">{cat.label}</span>
+            <Reveal key={cat.label} delay={0.04 + i * 0.04}>
+              <div className="group border-b border-line/50 py-5 md:py-6 grid grid-cols-1 md:grid-cols-12 gap-3 md:gap-8 items-center hover:bg-cream-deep/60 transition-colors duration-300 px-1 -mx-1 rounded-sm">
+                {/* Category */}
+                <div className="md:col-span-2">
+                  <span className="eyebrow !text-bronze !tracking-[0.2em]">{cat.label}</span>
                 </div>
 
                 {/* Tools */}
-                <div className="flex flex-wrap gap-2">
+                <div className="md:col-span-5 flex flex-wrap gap-2">
                   {cat.items.map((tool) => (
                     <span
                       key={tool}
-                      className="px-3 py-1.5 rounded-full text-[13px] font-medium text-cream/80 bg-cream/[0.06] border border-cream/10 hover:bg-bronze/20 hover:border-bronze/30 hover:text-cream transition-all duration-200"
+                      className="px-3 py-1.5 rounded-full text-[12px] font-medium text-graphite/70 bg-gradient-to-br from-[#f0f0f5] to-[#e8e8f0] border border-line/60 group-hover:border-bronze/25 transition-all duration-300"
                     >
                       {tool}
                     </span>
                   ))}
+                </div>
+
+                {/* Description */}
+                <div className="md:col-span-5">
+                  <p className="text-[13px] text-mute leading-relaxed">{cat.description}</p>
                 </div>
               </div>
             </Reveal>
           ))}
         </div>
 
-        {/* Bottom statement */}
+        {/* Bottom callout — branded, not generic */}
         <Reveal delay={0.3}>
-          <div className="mt-14 pt-10 border-t border-line-dark/50 flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
-            <p className="text-cream/40 text-[14px] max-w-md leading-relaxed">
-              Trabajamos con las plataformas del cliente o instalamos las que mejor se adapten al proyecto. Ninguna herramienta es mandatoria — el sistema sí lo es.
-            </p>
-            <div className="flex items-center gap-2 text-[12px] tracking-[0.2em] uppercase text-bronze shrink-0">
-              <span className="w-1.5 h-1.5 rounded-full bg-bronze" />
-              Stack actualizado 2026
-            </div>
+          <div className="mt-12 grid md:grid-cols-3 gap-4">
+            {[
+              { n: "6", label: "categorías de stack", sub: "CRM · Pauta · Auto · Analytics · Conv · Diseño" },
+              { n: "17+", label: "plataformas integradas", sub: "Best-in-class para cada función del sistema" },
+              { n: "1", label: "sistema conectado", sub: "Todo opera como una sola máquina, no como piezas sueltas" },
+            ].map((item) => (
+              <div
+                key={item.n}
+                className="rounded-xl p-6 bg-gradient-to-br from-[#f8f8fd] to-[#f0f0f8] border border-line/50"
+              >
+                <div className="font-display font-bold text-[2.5rem] leading-none text-ink mb-1">
+                  {item.n}
+                </div>
+                <div className="text-[13px] font-semibold text-ink/70 mb-1">{item.label}</div>
+                <div className="text-[11px] text-mute leading-relaxed">{item.sub}</div>
+              </div>
+            ))}
           </div>
         </Reveal>
       </div>
