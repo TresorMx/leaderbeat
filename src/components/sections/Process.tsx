@@ -2,14 +2,16 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "motion/react";
+import { Search, Compass, Wrench, TrendingUp } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
+
+const phaseIcons = [Search, Compass, Wrench, TrendingUp];
 
 const phases = [
   {
     n: "01",
     name: "Diagnóstico",
     time: "Semanas 1–2",
-    icon: "◎",
     body: "Auditamos marca, datos, stack, pipeline y equipo. Devolvemos un blueprint con prioridades, caso de inversión y roadmap claro.",
     items: [
       "Auditoría de marca y posicionamiento actual",
@@ -23,7 +25,6 @@ const phases = [
     n: "02",
     name: "Diseño",
     time: "Semanas 3–5",
-    icon: "◈",
     body: "Diseñamos el sistema BEAT a la medida del proyecto. Cada decisión se valida con el equipo comercial antes de construir.",
     items: [
       "Arquitectura de marca y sistema visual",
@@ -37,7 +38,6 @@ const phases = [
     n: "03",
     name: "Instalación",
     time: "Semanas 6–10",
-    icon: "◐",
     body: "Construimos, configuramos y lanzamos. Entrenamos al equipo hasta que el sistema corre solo. Todo queda documentado.",
     items: [
       "Construcción de identidad y aplicaciones",
@@ -51,7 +51,6 @@ const phases = [
     n: "04",
     name: "Operación",
     time: "Mes 3 en adelante",
-    icon: "◉",
     body: "Corremos el motor contigo. Revisión mensual ejecutiva, optimización continua y nuevas iniciativas trimestrales.",
     items: [
       "Reunión ejecutiva mensual con métricas",
@@ -78,7 +77,7 @@ export function Process() {
         </Reveal>
 
         <Reveal delay={0.05}>
-          <h2 className="display-lg max-w-[16ch]">
+          <h2 className="display-md max-w-[16ch]">
             Cuatro fases.{" "}
             <em className="not-italic text-bronze">Un sistema.</em>
           </h2>
@@ -99,12 +98,12 @@ export function Process() {
                       : "border-line/60 bg-gradient-to-br from-white to-[#f8f8fd] hover:border-bronze/30 hover:shadow-sm"
                   }`}
                 >
-                  {/* Progress dot */}
+                  {/* Phase icon */}
                   <div className="flex items-center justify-between mb-3">
                     <span className={`text-[11px] tracking-[0.2em] uppercase font-medium ${isActive ? "text-bronze" : "text-mute"}`}>
                       {p.n}
                     </span>
-                    <span className={`text-lg ${isActive ? "text-bronze" : "text-line"}`}>{p.icon}</span>
+                    {(() => { const Icon = phaseIcons[i]; return <Icon size={22} strokeWidth={1.5} className={isActive ? "text-bronze" : "text-line"} />; })()}
                   </div>
                   <div className={`font-display font-bold text-[15px] md:text-[17px] ${isActive ? "text-cream" : "text-ink"}`}>
                     {p.name}
