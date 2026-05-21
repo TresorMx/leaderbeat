@@ -30,7 +30,7 @@ export function Nav() {
       className={cn(
         "fixed inset-x-0 top-0 z-50 transition-all duration-500",
         scrolled
-          ? "backdrop-blur-md bg-cream/75 border-b border-line/40"
+          ? "backdrop-blur-md bg-ink/80 border-b border-line-dark/40"
           : "bg-transparent border-b border-transparent"
       )}
     >
@@ -81,7 +81,7 @@ export function Nav() {
             animate={{ opacity: 1, height: "auto" }}
             exit={{ opacity: 0, height: 0 }}
             transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden border-t border-line/40 bg-cream overflow-hidden"
+            className="md:hidden border-t border-line-dark/40 bg-ink overflow-hidden"
           >
             <div className="container-edge py-6 flex flex-col gap-5">
               {links.map((link) => (

@@ -6,23 +6,23 @@
 
 @theme inline {
   /* --- Brand palette --- */
-  --color-ink: #0F1419;        /* near-black with warmth — heroes & closings */
-  --color-ink-soft: #1A1F26;   /* softer dark for elevated surfaces on dark */
-  --color-cream: #F4EFE6;      /* warm off-white — content surfaces */
-  --color-cream-deep: #ECE5D7; /* slightly deeper cream for cards */
-  --color-bronze: #B8946F;     /* signature accent */
-  --color-bronze-soft: #D4B896;
-  --color-graphite: #1A1A1A;   /* body text on cream */
-  --color-mute: #6B6B6B;       /* secondary text */
-  --color-line: #C9BFB1;       /* hairlines on cream */
-  --color-line-dark: #2A2F36;  /* hairlines on dark */
+  --color-ink: #0A0A0F;        /* near-black — heroes & closings */
+  --color-ink-soft: #16161E;   /* softer dark for elevated surfaces */
+  --color-cream: #ffffff;      /* pure white — content surfaces */
+  --color-cream-deep: #F4F4F8; /* light gray for cards/sections */
+  --color-bronze: #6C63FF;     /* violet accent */
+  --color-bronze-soft: #9B95FF; /* lighter violet */
+  --color-graphite: #0F0F14;   /* body text on white */
+  --color-mute: #6B6B7B;       /* secondary text */
+  --color-line: #E4E4EF;       /* hairlines on white */
+  --color-line-dark: #1E1E2E;  /* hairlines on dark */
 
   /* --- Semantic aliases --- */
   --color-background: var(--color-cream);
   --color-foreground: var(--color-graphite);
 
   /* --- Typography --- */
-  --font-display: var(--font-fraunces);
+  --font-display: var(--font-space-grotesk);
   --font-sans: var(--font-inter);
   --font-mono: var(--font-jetbrains);
 
@@ -49,6 +49,14 @@ body {
   font-feature-settings: "ss01", "cv01", "cv11";
 }
 
+/* Gradient orb utility */
+.orb-violet {
+  background: radial-gradient(circle at center, #6C63FF 0%, transparent 65%);
+}
+.orb-violet-soft {
+  background: radial-gradient(circle at center, #9B95FF 0%, transparent 65%);
+}
+
 /* Selection */
 ::selection {
   background: var(--color-ink);
@@ -68,28 +76,28 @@ body {
    Reusable utility primitives
    ========================================================================== */
 
-/* Editorial display heading */
+/* Display headings — Space Grotesk bold */
 .display-xl {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  line-height: 0.95;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  line-height: 0.92;
   font-size: clamp(3rem, 8vw, 8rem);
 }
 
 .display-lg {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.025em;
-  line-height: 1;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.035em;
+  line-height: 0.95;
   font-size: clamp(2.5rem, 6vw, 5.5rem);
 }
 
 .display-md {
-  font-family: var(--font-fraunces), Georgia, serif;
-  font-weight: 400;
-  letter-spacing: -0.02em;
-  line-height: 1.05;
+  font-family: var(--font-space-grotesk), system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
   font-size: clamp(2rem, 4vw, 3.5rem);
 }
 

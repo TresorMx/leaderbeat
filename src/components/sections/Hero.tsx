@@ -24,21 +24,29 @@ const wordVariants = {
 export function Hero() {
   return (
     <section className="relative min-h-[100svh] flex flex-col justify-between overflow-hidden bg-ink text-cream pt-28 md:pt-36 pb-12">
-      {/* Subtle gradient orb for depth — pure CSS, no images */}
+      {/* Violet gradient orbs */}
       <div
         aria-hidden
-        className="pointer-events-none absolute -top-1/3 -right-1/4 w-[55vw] h-[55vw] rounded-full opacity-[0.07] blur-3xl"
+        className="pointer-events-none absolute -top-1/3 -right-1/4 w-[55vw] h-[55vw] rounded-full opacity-[0.18] blur-3xl"
         style={{
           background:
-            "radial-gradient(circle at center, var(--color-bronze) 0%, transparent 60%)",
+            "radial-gradient(circle at center, #6C63FF 0%, #9B95FF 40%, transparent 70%)",
         }}
       />
       <div
         aria-hidden
-        className="pointer-events-none absolute -bottom-1/2 -left-1/4 w-[60vw] h-[60vw] rounded-full opacity-[0.05] blur-3xl"
+        className="pointer-events-none absolute -bottom-1/2 -left-1/4 w-[60vw] h-[60vw] rounded-full opacity-[0.12] blur-3xl"
         style={{
           background:
-            "radial-gradient(circle at center, var(--color-cream) 0%, transparent 60%)",
+            "radial-gradient(circle at center, #6C63FF 0%, transparent 65%)",
+        }}
+      />
+      <div
+        aria-hidden
+        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[40vw] opacity-[0.04] blur-3xl"
+        style={{
+          background:
+            "radial-gradient(ellipse at center, #9B95FF 0%, transparent 70%)",
         }}
       />
 
