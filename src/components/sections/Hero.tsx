@@ -3,19 +3,16 @@
 import { motion } from "motion/react";
 import { CTAButton } from "@/components/ui/CTAButton";
 
-const headline = "El sistema operativo comercial de las marcas inmobiliarias modernas.";
-
-// Splits headline into words for stagger reveal
-const words = headline.split(" ");
+const words = "El sistema operativo comercial de las marcas inmobiliarias modernas.".split(" ");
 
 const wordVariants = {
-  hidden: { opacity: 0, y: 28 },
+  hidden: { opacity: 0, y: 20 },
   show: (i: number) => ({
     opacity: 1,
     y: 0,
     transition: {
-      delay: 0.25 + i * 0.045,
-      duration: 0.9,
+      delay: 0.2 + i * 0.04,
+      duration: 0.7,
       ease: [0.22, 1, 0.36, 1] as const,
     },
   }),
@@ -23,49 +20,39 @@ const wordVariants = {
 
 export function Hero() {
   return (
-    <section className="relative min-h-[100svh] flex flex-col justify-between overflow-hidden bg-ink text-cream pt-28 md:pt-36 pb-12">
+    <section className="relative h-[100svh] flex flex-col overflow-hidden bg-ink text-cream">
       {/* Violet gradient orbs */}
       <div
         aria-hidden
         className="pointer-events-none absolute -top-1/3 -right-1/4 w-[55vw] h-[55vw] rounded-full opacity-[0.18] blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle at center, #6C63FF 0%, #9B95FF 40%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(circle at center, #6C63FF 0%, #9B95FF 40%, transparent 70%)" }}
       />
       <div
         aria-hidden
         className="pointer-events-none absolute -bottom-1/2 -left-1/4 w-[60vw] h-[60vw] rounded-full opacity-[0.12] blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle at center, #6C63FF 0%, transparent 65%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[80vw] h-[40vw] opacity-[0.04] blur-3xl"
-        style={{
-          background:
-            "radial-gradient(ellipse at center, #9B95FF 0%, transparent 70%)",
-        }}
+        style={{ background: "radial-gradient(circle at center, #6C63FF 0%, transparent 65%)" }}
       />
 
-      <div className="container-edge relative flex-1 flex flex-col justify-center">
+      {/* Main content — takes all available space between nav and bottom strip */}
+      <div className="container-edge relative flex-1 flex flex-col justify-center pt-20 pb-4">
         {/* Eyebrow */}
         <motion.div
-          initial={{ opacity: 0, y: 12 }}
+          initial={{ opacity: 0, y: 10 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }}
-          className="flex items-center gap-3 mb-10"
+          transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}
+          className="flex items-center gap-3 mb-6 md:mb-8"
         >
-          <span className="w-8 h-px bg-bronze" />
+          <span className="w-6 h-px bg-bronze" />
           <span className="eyebrow !text-bronze !tracking-[0.25em]">
             Real Estate · Estudio comercial
           </span>
         </motion.div>
 
-        {/* Massive headline with word-stagger reveal */}
-        <h1 className="display-xl max-w-[18ch]">
+        {/* Headline — clamp más ajustado para caber en viewport */}
+        <h1
+          className="font-display font-bold tracking-[-0.04em] leading-[0.92] max-w-[18ch]"
+          style={{ fontSize: "clamp(2.2rem, 5.5vw, 5.5rem)" }}
+        >
           {words.map((word, i) => (
             <motion.span
               key={i}
@@ -76,64 +63,58 @@ export function Hero() {
               className="inline-block mr-[0.22em]"
             >
               {word === "modernas." ? (
-                <em className="not-italic text-bronze font-normal">{word}</em>
-              ) : (
-                word
-              )}
+                <em className="not-italic text-bronze">{word}</em>
+              ) : word}
             </motion.span>
           ))}
         </h1>
 
-        {/* Tagline + CTA row */}
+        {/* Tagline + CTA */}
         <motion.div
-          initial={{ opacity: 0, y: 16 }}
+          initial={{ opacity: 0, y: 14 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{
-            delay: 0.25 + words.length * 0.045 + 0.2,
-            duration: 0.8,
+            delay: 0.2 + words.length * 0.04 + 0.15,
+            duration: 0.7,
             ease: [0.22, 1, 0.36, 1],
           }}
-          className="mt-14 md:mt-20 flex flex-col md:flex-row md:items-end justify-between gap-10"
+          className="mt-8 md:mt-10 flex flex-col md:flex-row md:items-end justify-between gap-6 md:gap-10"
         >
-          <p className="max-w-md text-cream/70 text-[17px] leading-relaxed">
-            Construimos las marcas, los procesos y la tecnología discreta que cierran ventas
-            mientras tu competencia todavía piensa en encender pauta.
+          <p className="max-w-sm text-cream/65 text-[15px] md:text-[17px] leading-relaxed">
+            Construimos las marcas, los procesos y la tecnología que cierran
+            ventas mientras tu competencia todavía piensa en encender pauta.
           </p>
 
-          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-5">
-            <CTAButton href="#contacto" variant="inverse">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+            <CTAButton href="#contacto" variant="primary">
               Solicita tu diagnóstico
             </CTAButton>
             <a
               href="#sistema"
-              className="text-cream/60 text-[14px] tracking-wide hover:text-bronze transition-colors"
+              className="text-cream/50 text-[13px] tracking-wide hover:text-bronze transition-colors"
             >
-              o conoce el sistema BEAT →
+              Ver el sistema BEAT →
             </a>
           </div>
         </motion.div>
       </div>
 
-      {/* Bottom strip — live indicator + scroll hint */}
+      {/* Bottom strip */}
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
-        transition={{ delay: 1.8, duration: 1 }}
-        className="container-edge relative mt-16 md:mt-24 pt-6 border-t border-line-dark/60 flex items-center justify-between text-[11px] tracking-[0.18em] uppercase text-cream/40"
+        transition={{ delay: 1.6, duration: 1 }}
+        className="container-edge relative py-4 border-t border-line-dark/50 flex items-center justify-between text-[10px] tracking-[0.18em] uppercase text-cream/35"
       >
-        <div className="flex items-center gap-2.5">
-          <span className="relative flex h-2 w-2">
+        <div className="flex items-center gap-2">
+          <span className="relative flex h-1.5 w-1.5">
             <span className="absolute inline-flex h-full w-full rounded-full bg-bronze opacity-50 animate-ping" />
-            <span className="relative inline-flex h-2 w-2 rounded-full bg-bronze" />
+            <span className="relative inline-flex h-1.5 w-1.5 rounded-full bg-bronze" />
           </span>
           Operando · Proyectos activos
         </div>
-        <div className="hidden sm:block">
-          Cali · Medellín · México · US Hispanic
-        </div>
-        <div className="hidden md:block">
-          Scroll ↓
-        </div>
+        <div className="hidden sm:block">Cali · Medellín · México · US Hispanic</div>
+        <div className="hidden md:block">Scroll ↓</div>
       </motion.div>
     </section>
   );

@@ -1,22 +1,19 @@
 "use client";
 
-import { Check, X } from "lucide-react";
 import { Reveal } from "@/components/ui/Reveal";
 
 const fit = [
-  "Desarrollas o comercializas proyectos de USD 80k en adelante por unidad.",
-  "Inviertes más de USD 5k/mes en pauta y quieres saber qué pasa después del clic.",
+  "Desarrollas proyectos de USD 80k+ por unidad.",
+  "Inviertes en pauta y quieres saber qué pasa después del clic.",
   "Tienes equipo comercial pero no proceso documentado.",
-  "Lanzas más de un proyecto al año y necesitas no empezar de cero cada vez.",
-  "Estás dispuesto a documentar y entrenar a tu equipo.",
+  "Lanzas más de un proyecto al año.",
 ];
 
 const notFit = [
-  "Buscas un freelance que te haga un logo y un par de piezas.",
-  "Tu único objetivo es \"subir seguidores\".",
+  "Buscas un logo y un par de piezas sueltas.",
+  "Tu objetivo principal es \"subir seguidores\".",
   "No quieres documentar tu operación.",
-  "Esperas resultados de venta en menos de 30 días.",
-  "Compras siempre por el precio más bajo.",
+  "Esperas ventas en menos de 30 días.",
 ];
 
 export function WhoFor() {
@@ -31,33 +28,27 @@ export function WhoFor() {
         </Reveal>
 
         <Reveal delay={0.05}>
-          <h2 className="display-lg max-w-[18ch]">
+          <h2 className="display-lg max-w-[16ch]">
             No trabajamos con todo el mundo.{" "}
-            <em className="not-italic text-bronze font-normal">Por eso funciona.</em>
+            <em className="not-italic text-bronze">Por eso funciona.</em>
           </h2>
         </Reveal>
 
-        <div className="mt-20 md:mt-24 grid md:grid-cols-2 gap-x-12 gap-y-16">
+        <div className="mt-14 md:mt-16 grid md:grid-cols-2 gap-6">
           {/* Sí */}
           <Reveal delay={0.1}>
-            <div>
+            <div className="rounded-2xl bg-ink text-cream p-8 md:p-10 h-full">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full bg-ink text-cream flex items-center justify-center">
-                  <Check size={18} strokeWidth={2} />
+                <div className="w-8 h-8 rounded-full bg-bronze flex items-center justify-center text-[14px] font-bold text-ink">
+                  ✓
                 </div>
-                <span className="eyebrow !text-ink !tracking-[0.25em]">Es para ti si</span>
+                <span className="font-display font-bold text-[17px]">Es para ti si</span>
               </div>
-
-              <ul className="space-y-5">
-                {fit.map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex gap-4 pb-5 border-b border-line/60 text-[16px] leading-relaxed"
-                  >
-                    <span className="font-display italic text-bronze text-sm mt-1 shrink-0 w-6">
-                      0{i + 1}
-                    </span>
-                    <span className="text-ink">{item}</span>
+              <ul className="space-y-4">
+                {fit.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[15px] text-cream/75 leading-snug">
+                    <span className="w-1.5 h-1.5 rounded-full bg-bronze mt-2 shrink-0" />
+                    {item}
                   </li>
                 ))}
               </ul>
@@ -65,31 +56,40 @@ export function WhoFor() {
           </Reveal>
 
           {/* No */}
-          <Reveal delay={0.18}>
-            <div>
+          <Reveal delay={0.15}>
+            <div className="rounded-2xl bg-cream-deep border border-line/60 p-8 md:p-10 h-full">
               <div className="flex items-center gap-3 mb-8">
-                <div className="w-10 h-10 rounded-full border border-line text-mute flex items-center justify-center">
-                  <X size={18} strokeWidth={2} />
+                <div className="w-8 h-8 rounded-full border border-line/60 flex items-center justify-center text-[14px] text-mute">
+                  ✕
                 </div>
-                <span className="eyebrow !tracking-[0.25em]">No es para ti si</span>
+                <span className="font-display font-bold text-[17px] text-ink/60">No es para ti si</span>
               </div>
-
-              <ul className="space-y-5">
-                {notFit.map((item, i) => (
-                  <li
-                    key={i}
-                    className="flex gap-4 pb-5 border-b border-line/40 text-[16px] leading-relaxed"
-                  >
-                    <span className="font-display italic text-mute/60 text-sm mt-1 shrink-0 w-6">
-                      0{i + 1}
-                    </span>
-                    <span className="text-mute">{item}</span>
+              <ul className="space-y-4">
+                {notFit.map((item) => (
+                  <li key={item} className="flex items-start gap-3 text-[15px] text-mute leading-snug">
+                    <span className="w-1.5 h-1.5 rounded-full bg-line mt-2 shrink-0" />
+                    {item}
                   </li>
                 ))}
               </ul>
             </div>
           </Reveal>
         </div>
+
+        {/* Bottom callout */}
+        <Reveal delay={0.25}>
+          <div className="mt-8 rounded-xl border border-bronze/25 bg-bronze/5 px-7 py-5 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <p className="text-[15px] text-ink/70 max-w-lg">
+              Solo tomamos <strong className="text-ink">2 proyectos nuevos por trimestre</strong> para garantizar ejecución real. Si encajas, aplica ahora.
+            </p>
+            <a
+              href="#contacto"
+              className="shrink-0 text-[13px] font-semibold text-bronze hover:underline underline-offset-4"
+            >
+              Solicitar diagnóstico →
+            </a>
+          </div>
+        </Reveal>
       </div>
     </section>
   );
