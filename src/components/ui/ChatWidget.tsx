@@ -2,14 +2,22 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "motion/react";
-import { X, Send } from "lucide-react";
+import { X, Send, MessageCircle } from "lucide-react";
 
+// ─── Tipos ────────────────────────────────────────────────
 type Message = {
   id: string;
   role: "user" | "assistant";
   content: string;
 };
 
+type LeadData = {
+  name: string;
+  phone: string;
+  email: string;
+};
+
+// ─── Constantes ───────────────────────────────────────────
 const QUICK_QUESTIONS = [
   "¿Qué es el sistema BEAT?",
   "¿Cómo es el proceso de trabajo?",
@@ -22,10 +30,10 @@ const INITIAL_MESSAGE: Message = {
   id: "init",
   role: "assistant",
   content:
-    "¡Hola! Soy EVA, asesora de Leaderbeat 👋\n\nPuedo orientarte sobre el sistema BEAT, nuestro proceso o ayudarte a evaluar si tu proyecto encaja. ¿Por dónde empezamos?",
+    "¡Hola! Soy EVA, asesora virtual de Leaderbeat 👋\n\nEstoy aquí para ayudarte a descubrir si nuestro sistema puede transformar la operación comercial de tu proyecto inmobiliario.\n\nAntes de empezar, ¿me compartes tus datos para atenderte mejor?",
 };
 
-// Avatar de EVA — reemplazar src con foto real cuando esté disponible
+// ─── Sub-componentes ──────────────────────────────────────
 function EvaAvatar({ size = "md" }: { size?: "sm" | "md" }) {
   const dim = size === "sm" ? "w-7 h-7 text-[11px]" : "w-10 h-10 text-[17px]";
   return (
@@ -52,42 +60,51 @@ function TypingDots() {
   );
 }
 
-export function ChatWidget() {
+// ─── Componente principal ─────────────────────────────────
+interface ChatWidgetProps {
+  whatsappPhone?: string;
+}
+
+export function ChatWidget({ whatsappPhone = "521234567890" }: ChatWidgetProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [showGreeting, setShowGreeting] = useState(false);
   const [messages, setMessages] = useState<Message[]>([INITIAL_MESSAGE]);
   const [input, setInput] = useState("");
   const [isTyping, setIsTyping] = useState(false);
   const [hasUnread, setHasUnread] = useState(false);
+
+  // Estado del formulario de captación
+  const [leadData, setLeadData] = useState<LeadData | null>(null);
+  const [formValues, setFormValues] = useState({ name: "", phone: "", email: "" });
+  const [formErrors, setFormErrors] = useState({ name: false, phone: false, email: false });
+  const [isSubmittingForm, setIsSubmittingForm] = useState(false);
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const inputRef = useRef<HTMLInputElement>(null);
 
-  // Mostrar greeting después de 2.5s
+  // Greeting automático a los 2.5s
   useEffect(() => {
     const show = setTimeout(() => {
       setShowGreeting(true);
       setHasUnread(true);
     }, 2500);
     const hide = setTimeout(() => setShowGreeting(false), 9000);
-    return () => {
-      clearTimeout(show);
-      clearTimeout(hide);
-    };
+    return () => { clearTimeout(show); clearTimeout(hide); };
   }, []);
 
-  // Scroll al fondo en cada nuevo mensaje
+  // Scroll al fondo en cada cambio de mensajes
   useEffect(() => {
     if (isOpen) {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }
-  }, [messages, isTyping, isOpen]);
+  }, [messages, isTyping, isOpen, leadData]);
 
-  // Focus al abrir
+  // Focus al input al abrir (solo después de capturar datos)
   useEffect(() => {
-    if (isOpen) {
+    if (isOpen && leadData) {
       setTimeout(() => inputRef.current?.focus(), 350);
     }
-  }, [isOpen]);
+  }, [isOpen, leadData]);
 
   const handleOpen = () => {
     setIsOpen(true);
@@ -95,6 +112,43 @@ export function ChatWidget() {
     setHasUnread(false);
   };
 
+  // ── Validación y envío del formulario ──────────────────
+  const validateEmail = (email: string) =>
+    /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+
+  const handleFormSubmit = async () => {
+    const errors = {
+      name: formValues.name.trim().length < 2,
+      phone: formValues.phone.trim().length < 7,
+      email: !validateEmail(formValues.email.trim()),
+    };
+    setFormErrors(errors);
+    if (Object.values(errors).some(Boolean)) return;
+
+    setIsSubmittingForm(true);
+    const name = formValues.name.trim().split(" ")[0]; // primer nombre
+
+    // Pequeño delay para sensación de procesamiento
+    await new Promise((r) => setTimeout(r, 600));
+
+    const lead: LeadData = {
+      name: formValues.name.trim(),
+      phone: formValues.phone.trim(),
+      email: formValues.email.trim(),
+    };
+    setLeadData(lead);
+
+    // Respuesta personalizada de EVA
+    const greeting: Message = {
+      id: "post-form",
+      role: "assistant",
+      content: `¡Perfecto, ${name}! 🙌 Mucho gusto.\n\nAhora sí, cuéntame: ¿en qué puedo ayudarte hoy?`,
+    };
+    setMessages((prev) => [...prev, greeting]);
+    setIsSubmittingForm(false);
+  };
+
+  // ── Envío de mensajes al chat ──────────────────────────
   const sendMessage = async (content: string) => {
     if (!content.trim() || isTyping) return;
 
@@ -114,6 +168,7 @@ export function ChatWidget() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: updated.map((m) => ({ role: m.role, content: m.content })),
+          leadName: leadData?.name ?? null,
         }),
       });
 
@@ -135,7 +190,7 @@ export function ChatWidget() {
           id: (Date.now() + 1).toString(),
           role: "assistant",
           content:
-            "Hubo un problema técnico 😔 Escríbenos directamente a hola@leaderbeat.io y te respondemos en minutos.",
+            "Tuve un problema técnico 😔 Escríbenos directamente a hola@leaderbeat.io y te respondemos en minutos.",
         },
       ]);
     } finally {
@@ -143,11 +198,16 @@ export function ChatWidget() {
     }
   };
 
-  const showQuickReplies = messages.length === 1 && !isTyping;
+  // Quick replies aparecen solo justo después del form (2 mensajes: init + bienvenida)
+  const showQuickReplies = leadData !== null && messages.length === 2 && !isTyping;
+
+  const waLink = `https://wa.me/${whatsappPhone}?text=${encodeURIComponent(
+    "Hola, me interesa saber más sobre Leaderbeat 🏢"
+  )}`;
 
   return (
     <>
-      {/* ── Panel de chat ──────────────────────────────────── */}
+      {/* ── Panel de chat ──────────────────────────────── */}
       <AnimatePresence>
         {isOpen && (
           <motion.div
@@ -164,10 +224,7 @@ export function ChatWidget() {
             {/* Header */}
             <div
               className="px-4 py-3.5 flex items-center gap-3"
-              style={{
-                background:
-                  "linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%)",
-              }}
+              style={{ background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%)" }}
             >
               <div className="relative">
                 <EvaAvatar size="md" />
@@ -191,7 +248,7 @@ export function ChatWidget() {
             </div>
 
             {/* Mensajes */}
-            <div className="bg-[#f5f5fa] h-[320px] md:h-[340px] overflow-y-auto px-4 py-4 flex flex-col gap-3">
+            <div className="bg-[#f5f5fa] h-[340px] md:h-[360px] overflow-y-auto px-4 py-4 flex flex-col gap-3">
               {messages.map((msg) => (
                 <div
                   key={msg.id}
@@ -199,9 +256,7 @@ export function ChatWidget() {
                     msg.role === "user" ? "flex-row-reverse" : "flex-row"
                   }`}
                 >
-                  {msg.role === "assistant" && (
-                    <EvaAvatar size="sm" />
-                  )}
+                  {msg.role === "assistant" && <EvaAvatar size="sm" />}
                   <div
                     className={`max-w-[78%] rounded-2xl px-3.5 py-2.5 text-[13.5px] leading-relaxed whitespace-pre-line ${
                       msg.role === "user"
@@ -210,10 +265,7 @@ export function ChatWidget() {
                     }`}
                     style={
                       msg.role === "user"
-                        ? {
-                            background:
-                              "linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%)",
-                          }
+                        ? { background: "linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%)" }
                         : {}
                     }
                   >
@@ -222,12 +274,126 @@ export function ChatWidget() {
                 </div>
               ))}
 
-              {/* Quick replies — solo al inicio */}
+              {/* ── Formulario de captación ─────────────── */}
+              {!leadData && (
+                <motion.div
+                  initial={{ opacity: 0, y: 8 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: 0.35, duration: 0.4 }}
+                  className="ml-9"
+                >
+                  <div className="bg-white rounded-2xl rounded-tl-sm p-4 shadow-sm border border-black/[0.06] space-y-2.5">
+                    {/* Nombre */}
+                    <div>
+                      <input
+                        type="text"
+                        placeholder="Nombre completo *"
+                        value={formValues.name}
+                        onChange={(e) => {
+                          setFormValues((v) => ({ ...v, name: e.target.value }));
+                          setFormErrors((e2) => ({ ...e2, name: false }));
+                        }}
+                        className={`w-full bg-[#f5f5fa] rounded-xl px-3 py-2.5 text-[13px] text-graphite placeholder:text-mute outline-none transition-all ${
+                          formErrors.name ? "ring-2 ring-red-400/50" : ""
+                        }`}
+                        style={{ boxShadow: "none" }}
+                        onFocus={(e) =>
+                          (e.target.style.boxShadow = "0 0 0 2px rgba(108,99,255,0.25)")
+                        }
+                        onBlur={(e) => (e.target.style.boxShadow = "none")}
+                      />
+                      {formErrors.name && (
+                        <p className="text-[11px] text-red-400 mt-1 ml-1">
+                          Ingresa tu nombre
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Teléfono */}
+                    <div>
+                      <input
+                        type="tel"
+                        placeholder="Teléfono / WhatsApp *"
+                        value={formValues.phone}
+                        onChange={(e) => {
+                          setFormValues((v) => ({ ...v, phone: e.target.value }));
+                          setFormErrors((e2) => ({ ...e2, phone: false }));
+                        }}
+                        className={`w-full bg-[#f5f5fa] rounded-xl px-3 py-2.5 text-[13px] text-graphite placeholder:text-mute outline-none transition-all ${
+                          formErrors.phone ? "ring-2 ring-red-400/50" : ""
+                        }`}
+                        style={{ boxShadow: "none" }}
+                        onFocus={(e) =>
+                          (e.target.style.boxShadow = "0 0 0 2px rgba(108,99,255,0.25)")
+                        }
+                        onBlur={(e) => (e.target.style.boxShadow = "none")}
+                      />
+                      {formErrors.phone && (
+                        <p className="text-[11px] text-red-400 mt-1 ml-1">
+                          Ingresa un teléfono válido
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Correo */}
+                    <div>
+                      <input
+                        type="email"
+                        placeholder="Correo electrónico *"
+                        value={formValues.email}
+                        onChange={(e) => {
+                          setFormValues((v) => ({ ...v, email: e.target.value }));
+                          setFormErrors((e2) => ({ ...e2, email: false }));
+                        }}
+                        className={`w-full bg-[#f5f5fa] rounded-xl px-3 py-2.5 text-[13px] text-graphite placeholder:text-mute outline-none transition-all ${
+                          formErrors.email ? "ring-2 ring-red-400/50" : ""
+                        }`}
+                        style={{ boxShadow: "none" }}
+                        onFocus={(e) =>
+                          (e.target.style.boxShadow = "0 0 0 2px rgba(108,99,255,0.25)")
+                        }
+                        onBlur={(e) => (e.target.style.boxShadow = "none")}
+                      />
+                      {formErrors.email && (
+                        <p className="text-[11px] text-red-400 mt-1 ml-1">
+                          Ingresa un correo válido
+                        </p>
+                      )}
+                    </div>
+
+                    {/* Submit */}
+                    <motion.button
+                      onClick={handleFormSubmit}
+                      disabled={isSubmittingForm}
+                      whileTap={{ scale: 0.97 }}
+                      className="w-full py-2.5 rounded-xl text-[13px] font-semibold text-white transition-all disabled:opacity-60"
+                      style={{
+                        background:
+                          "linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%)",
+                      }}
+                    >
+                      {isSubmittingForm ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <TypingDots />
+                        </span>
+                      ) : (
+                        "Continuar →"
+                      )}
+                    </motion.button>
+
+                    <p className="text-[10.5px] text-mute/60 text-center leading-snug">
+                      Tus datos son confidenciales y solo se usan para atenderte.
+                    </p>
+                  </div>
+                </motion.div>
+              )}
+
+              {/* Quick replies — después del form, antes del primer mensaje del usuario */}
               {showQuickReplies && (
                 <motion.div
                   initial={{ opacity: 0, y: 8 }}
                   animate={{ opacity: 1, y: 0 }}
-                  transition={{ delay: 0.3, duration: 0.4 }}
+                  transition={{ delay: 0.2, duration: 0.4 }}
                   className="flex flex-col gap-1.5 ml-9"
                 >
                   {QUICK_QUESTIONS.map((q) => (
@@ -262,56 +428,69 @@ export function ChatWidget() {
               <div ref={messagesEndRef} />
             </div>
 
-            {/* Input */}
-            <div className="bg-white border-t border-black/[0.06] px-3 py-3 flex gap-2 items-center">
-              <input
-                ref={inputRef}
-                type="text"
-                value={input}
-                onChange={(e) => setInput(e.target.value)}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter" && !e.shiftKey) {
-                    e.preventDefault();
-                    sendMessage(input);
-                  }
-                }}
-                placeholder="Escribe tu pregunta..."
-                className="flex-1 bg-[#f5f5fa] rounded-xl px-3.5 py-2.5 text-[13.5px] text-graphite placeholder:text-mute outline-none transition-all"
-                style={{
-                  boxShadow: "none",
-                }}
-                onFocus={(e) =>
-                  (e.target.style.boxShadow =
-                    "0 0 0 2px rgba(108,99,255,0.3)")
-                }
-                onBlur={(e) => (e.target.style.boxShadow = "none")}
-              />
-              <motion.button
-                onClick={() => sendMessage(input)}
-                disabled={!input.trim() || isTyping}
-                whileTap={{ scale: 0.92 }}
-                className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors shrink-0 disabled:opacity-35 disabled:cursor-not-allowed"
-                style={{ background: "linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%)" }}
-                aria-label="Enviar mensaje"
-              >
-                <Send size={15} strokeWidth={2} className="text-white" />
-              </motion.button>
-            </div>
+            {/* Input — solo visible después de capturar datos */}
+            <AnimatePresence>
+              {leadData && (
+                <motion.div
+                  initial={{ opacity: 0, height: 0 }}
+                  animate={{ opacity: 1, height: "auto" }}
+                  className="bg-white border-t border-black/[0.06] px-3 py-3 flex gap-2 items-center"
+                >
+                  <input
+                    ref={inputRef}
+                    type="text"
+                    value={input}
+                    onChange={(e) => setInput(e.target.value)}
+                    onKeyDown={(e) => {
+                      if (e.key === "Enter" && !e.shiftKey) {
+                        e.preventDefault();
+                        sendMessage(input);
+                      }
+                    }}
+                    placeholder={`Escribe tu pregunta, ${leadData.name.split(" ")[0]}…`}
+                    className="flex-1 bg-[#f5f5fa] rounded-xl px-3.5 py-2.5 text-[13.5px] text-graphite placeholder:text-mute outline-none transition-all"
+                    style={{ boxShadow: "none" }}
+                    onFocus={(e) =>
+                      (e.target.style.boxShadow = "0 0 0 2px rgba(108,99,255,0.3)")
+                    }
+                    onBlur={(e) => (e.target.style.boxShadow = "none")}
+                  />
+                  <motion.button
+                    onClick={() => sendMessage(input)}
+                    disabled={!input.trim() || isTyping}
+                    whileTap={{ scale: 0.92 }}
+                    className="w-9 h-9 rounded-xl flex items-center justify-center transition-colors shrink-0 disabled:opacity-35 disabled:cursor-not-allowed"
+                    style={{ background: "linear-gradient(135deg, #6C63FF 0%, #5A52E0 100%)" }}
+                    aria-label="Enviar mensaje"
+                  >
+                    <Send size={15} strokeWidth={2} className="text-white" />
+                  </motion.button>
+                </motion.div>
+              )}
+            </AnimatePresence>
 
-            {/* Footer */}
-            <div className="bg-white border-t border-black/[0.04] py-1.5 text-center">
-              <span className="text-[10px] text-mute/60 tracking-[0.1em] uppercase">
+            {/* Footer — brand izquierda · WhatsApp derecha */}
+            <div className="bg-white border-t border-black/[0.04] py-2 px-3 flex items-center justify-between">
+              <span className="text-[9.5px] text-mute/50 tracking-[0.08em] uppercase">
                 Asistida por{" "}
+                <span className="text-[#6C63FF]/60 font-semibold">Leaderbeat</span>
               </span>
-              <span className="text-[10px] text-[#6C63FF]/70 font-semibold tracking-[0.1em] uppercase">
-                Leaderbeat.io
-              </span>
+              <a
+                href={waLink}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-center gap-1.5 text-[10.5px] font-semibold transition-opacity hover:opacity-80"
+                style={{ color: "#25D366" }}
+              >
+                <MessageCircle size={12} strokeWidth={2} />
+                Hablar por WhatsApp
+              </a>
             </div>
           </motion.div>
         )}
       </AnimatePresence>
 
-      {/* ── Burbuja de bienvenida ──────────────────────────── */}
+      {/* ── Burbuja de bienvenida ──────────────────────── */}
       <AnimatePresence>
         {showGreeting && !isOpen && (
           <motion.button
@@ -324,7 +503,7 @@ export function ChatWidget() {
             aria-label="Abrir chat"
           >
             <div
-              className="text-white text-[13px] rounded-2xl rounded-br-sm px-4 py-3 leading-snug max-w-[210px] relative"
+              className="text-white text-[13px] rounded-2xl rounded-br-sm px-4 py-3 leading-snug max-w-[220px] relative"
               style={{
                 background: "linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%)",
                 boxShadow: "0 8px 32px rgba(0,0,0,0.25)",
@@ -332,10 +511,9 @@ export function ChatWidget() {
             >
               <span className="font-semibold">¡Bienvenido a Leaderbeat!</span>
               <br />
-              <span className="text-white/60 text-[12px]">
-                ¿Puedo ayudarte con algo? 👋
+              <span className="text-white/55 text-[12px]">
+                Soy EVA, ¿puedo ayudarte? 👋
               </span>
-              {/* Flecha */}
               <span
                 className="absolute -bottom-1.5 right-6 w-3 h-3 rotate-45"
                 style={{ background: "#0f0f23" }}
@@ -346,7 +524,7 @@ export function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* ── Botón flotante ─────────────────────────────────── */}
+      {/* ── Botón flotante ─────────────────────────────── */}
       <motion.button
         onClick={isOpen ? () => setIsOpen(false) : handleOpen}
         whileHover={{ scale: 1.07 }}

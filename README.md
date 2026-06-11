@@ -17,7 +17,7 @@ Abrir [http://localhost:3000](http://localhost:3000).
 - **Tailwind CSS v4** — design tokens en `src/app/globals.css`
 - **Motion** (`motion/react`) — animaciones
 - **Lucide React** — iconografía
-- **Fuentes (Google Fonts via `next/font`)**: Fraunces (display serif), Inter (sans), JetBrains Mono (mono)
+- **Fuentes (Google Fonts via `next/font`)**: Space Grotesk (display), Inter (sans), JetBrains Mono (mono)
 
 ## Estructura
 
@@ -45,19 +45,25 @@ src/
 
 ### Paleta
 
+> Nota: los nombres de los tokens (`bronze`, `cream`) se conservan por
+> compatibilidad histórica, pero los valores actuales son violeta/blanco.
+
 | Token | Valor | Uso |
 |-------|-------|-----|
-| `ink` | `#0F1419` | Negro cálido — fondos hero y closing |
-| `cream` | `#F4EFE6` | Crema cálido — fondo principal |
-| `bronze` | `#B8946F` | Acento — destacados, links activos |
-| `graphite` | `#1A1A1A` | Texto principal sobre crema |
-| `mute` | `#6B6B6B` | Texto secundario |
-| `line` | `#C9BFB1` | Hairlines sobre crema |
-| `line-dark` | `#2A2F36` | Hairlines sobre dark |
+| `ink` | `#0A0A0F` | Near-black — fondos hero y closing |
+| `ink-soft` | `#16161E` | Dark elevado — cards sobre ink |
+| `cream` | `#FFFFFF` | Blanco — fondo principal |
+| `cream-deep` | `#F4F4F8` | Gris claro — cards y secciones |
+| `bronze` | `#6C63FF` | Violeta — acento, CTAs, destacados |
+| `bronze-soft` | `#9B95FF` | Violeta claro — hovers |
+| `graphite` | `#0F0F14` | Texto principal sobre blanco |
+| `mute` | `#6B6B7B` | Texto secundario |
+| `line` | `#E4E4EF` | Hairlines sobre blanco |
+| `line-dark` | `#1E1E2E` | Hairlines sobre dark |
 
 ### Tipografía
 
-- **Display:** Fraunces (serif editorial, para titulares grandes)
+- **Display:** Space Grotesk (titulares grandes, bold, tracking negativo)
 - **Body:** Inter (sans-serif, para todo lo demás)
 - **Mono:** JetBrains Mono (para detalles tipo "live indicator")
 

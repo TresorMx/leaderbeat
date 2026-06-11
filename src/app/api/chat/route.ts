@@ -73,7 +73,7 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const { messages } = await req.json();
+    const { messages, leadName } = await req.json();
 
     if (!messages || !Array.isArray(messages)) {
       return NextResponse.json({ error: "Mensajes inválidos" }, { status: 400 });
@@ -81,10 +81,15 @@ export async function POST(req: NextRequest) {
 
     const client = new Anthropic({ apiKey: process.env.ANTHROPIC_API_KEY });
 
+    // Inyectar nombre del prospecto en el contexto si está disponible
+    const systemWithContext = leadName
+      ? `${SYSTEM_PROMPT}\n\nNOTA: El nombre del prospecto es "${leadName}". Dirígete a él/ella por su nombre en cada respuesta.`
+      : SYSTEM_PROMPT;
+
     const response = await client.messages.create({
       model: "claude-haiku-4-5-20251001",
       max_tokens: 512,
-      system: SYSTEM_PROMPT,
+      system: systemWithContext,
       messages: messages
         .filter(
           (m: { role: string }) => m.role === "user" || m.role === "assistant"

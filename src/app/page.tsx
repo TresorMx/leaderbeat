@@ -3,6 +3,9 @@ import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
 import { Problem } from "@/components/sections/Problem";
 import { BeatSystem } from "@/components/sections/BeatSystem";
+import { ScoreCTA } from "@/components/sections/ScoreCTA";
+import { StatBreak } from "@/components/sections/StatBreak";
+import { BrokerBanner } from "@/components/sections/BrokerBanner";
 import { Process } from "@/components/sections/Process";
 import { Work } from "@/components/sections/Work";
 import { Stack } from "@/components/sections/Stack";
@@ -21,17 +24,20 @@ export default function Home() {
       <main>
         <Hero />
         <Problem />
+        <StatBreak />
         <BeatSystem />
+        <ScoreCTA />
         <Process />
         <Work />
         <Stack />
         <WhoFor />
+        <BrokerBanner />
         <Application />
         <Closing />
       </main>
       <Footer />
       <MobileBar phone={WHATSAPP_PHONE} />
-      <ChatWidget />
+      <ChatWidget whatsappPhone={WHATSAPP_PHONE} />
     </>
   );
 }

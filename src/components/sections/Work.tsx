@@ -172,11 +172,6 @@ export function Work() {
           ))}
         </div>
 
-        <Reveal delay={0.3}>
-          <p className="mt-10 text-[13px] text-mute italic">
-            → Reemplazar con casos reales y métricas duras cuando estén validados.
-          </p>
-        </Reveal>
       </div>
     </section>
   );

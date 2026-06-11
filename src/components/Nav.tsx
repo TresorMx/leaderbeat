@@ -2,12 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import Image from "next/image";
 import { motion, AnimatePresence } from "motion/react";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { CTAButton } from "@/components/ui/CTAButton";
 
 const links = [
+  { label: "BEAT Score", href: "/beat-score" },
   { label: "Sistema", href: "#sistema" },
   { label: "Proceso", href: "#proceso" },
   { label: "Trabajo", href: "#trabajo" },
@@ -26,81 +28,117 @@ export function Nav() {
   }, []);
 
   return (
-    <header
-      className={cn(
-        "fixed inset-x-0 top-0 z-50 transition-all duration-500",
-        scrolled
-          ? "backdrop-blur-md bg-ink/80 border-b border-line-dark/40"
-          : "bg-transparent border-b border-transparent"
-      )}
-    >
-      <div className="container-edge flex items-center justify-between h-16 md:h-20">
-        {/* Wordmark */}
-        <Link
-          href="/"
-          className="font-medium text-[13px] tracking-[0.18em] uppercase text-ink hover:text-bronze transition-colors"
-        >
-          Leaderbeat<span className="text-bronze">.io</span>
-        </Link>
+    <>
+      <header
+        className={cn(
+          "fixed inset-x-0 top-0 z-50 transition-all duration-500",
+          scrolled
+            ? "backdrop-blur-md bg-[#0d0520]/90"
+            : "bg-transparent"
+        )}
+      >
+        <div className="container-edge flex items-center justify-between h-16 md:h-20">
+          {/* Wordmark — oculto en móvil hasta hacer scroll */}
+          <Link
+            href="/"
+            className={cn(
+              "items-center hover:opacity-80 transition-all duration-500",
+              scrolled ? "flex" : "hidden md:flex"
+            )}
+          >
+            <Image src="/leaderbeat.svg" alt="Leaderbeat" width={140} height={32} priority />
+          </Link>
 
-        {/* Desktop menu */}
-        <nav className="hidden md:flex items-center gap-10">
-          {links.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-[13px] font-medium tracking-wide text-graphite hover:text-bronze transition-colors duration-300"
-            >
-              {link.label}
-            </a>
-          ))}
-        </nav>
+          {/* Spacer en móvil cuando el logo no está visible */}
+          {!scrolled && <div className="md:hidden" />}
 
-        {/* Right side: CTA */}
-        <div className="hidden md:block">
-          <CTAButton href="#contacto" variant="primary" className="!py-2.5 !px-5 !text-[13px]">
-            Diagnóstico
-          </CTAButton>
+          {/* Desktop menu */}
+          <nav className="hidden md:flex items-center gap-10">
+            {links.map((link) => (
+              <a
+                key={link.href}
+                href={link.href}
+                className="text-[13px] font-medium tracking-wide text-[#9B8FFF] hover:text-bronze transition-colors duration-300"
+              >
+                {link.label}
+              </a>
+            ))}
+          </nav>
+
+          {/* Right side: CTA */}
+          <div className="hidden md:block">
+            <CTAButton href="#contacto" variant="primary" className="!py-2.5 !px-5 !text-[13px]">
+              Diagnóstico
+            </CTAButton>
+          </div>
+
+          {/* Mobile menu button */}
+          <button
+            onClick={() => setOpen(!open)}
+            className="md:hidden text-white p-2 -mr-2"
+            aria-label="Menú"
+          >
+            {open ? <X size={20} /> : <Menu size={20} />}
+          </button>
         </div>
+      </header>
 
-        {/* Mobile menu button */}
-        <button
-          onClick={() => setOpen(!open)}
-          className="md:hidden text-ink p-2 -mr-2"
-          aria-label="Menú"
-        >
-          {open ? <X size={20} /> : <Menu size={20} />}
-        </button>
-      </div>
-
-      {/* Mobile menu sheet */}
+      {/* Mobile fullscreen menu — fuera del header para evitar conflicto con backdrop-filter */}
       <AnimatePresence>
         {open && (
           <motion.div
-            initial={{ opacity: 0, height: 0 }}
-            animate={{ opacity: 1, height: "auto" }}
-            exit={{ opacity: 0, height: 0 }}
-            transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
-            className="md:hidden border-t border-line-dark/40 bg-ink overflow-hidden"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3, ease: [0.22, 1, 0.36, 1] }}
+            className="md:hidden fixed inset-0 z-[60] bg-[#0d0520] flex flex-col"
           >
-            <div className="container-edge py-6 flex flex-col gap-5">
-              {links.map((link) => (
-                <a
+            {/* Close button */}
+            <div className="container-edge flex justify-end pt-5">
+              <button
+                onClick={() => setOpen(false)}
+                className="text-white p-2 -mr-2"
+                aria-label="Cerrar"
+              >
+                <X size={24} />
+              </button>
+            </div>
+
+            {/* Links */}
+            <nav className="container-edge flex-1 flex flex-col justify-center gap-8">
+              {links.map((link, i) => (
+                <motion.a
                   key={link.href}
                   href={link.href}
                   onClick={() => setOpen(false)}
-                  className="text-lg font-medium text-ink"
+                  initial={{ opacity: 0, x: -20 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ delay: 0.1 + i * 0.07, duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
+                  className="text-4xl font-bold text-white hover:text-[#9B8FFF] transition-colors duration-300"
                 >
                   {link.label}
-                </a>
+                </motion.a>
               ))}
-              <CTAButton href="#contacto" variant="primary" className="mt-2 self-start">
-                Solicita tu diagnóstico
-              </CTAButton>
+
+              <motion.div
+                initial={{ opacity: 0, y: 10 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: 0.1 + links.length * 0.07, duration: 0.4 }}
+                className="mt-4"
+              >
+                <CTAButton href="#contacto" variant="primary">
+                  Solicita tu diagnóstico
+                </CTAButton>
+              </motion.div>
+            </nav>
+
+            {/* Bottom strip */}
+            <div className="container-edge pb-10 text-[11px] tracking-[0.18em] uppercase text-white/30">
+              Leaderbeat · Real Estate
             </div>
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+    </>
   );
 }
