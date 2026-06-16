@@ -21,25 +21,40 @@ export function Closing() {
   return (
     <section
       ref={ref}
-      className="relative bg-ink text-cream py-32 md:py-48 overflow-hidden"
+      className="relative text-cream py-32 md:py-48 overflow-hidden"
     >
-      {/* Gradient orbs (matching hero) */}
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -top-1/3 -left-1/4 w-[55vw] h-[55vw] rounded-full opacity-[0.08] blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle at center, var(--color-bronze) 0%, transparent 60%)",
-        }}
-      />
-      <div
-        aria-hidden
-        className="pointer-events-none absolute -bottom-1/3 -right-1/4 w-[60vw] h-[60vw] rounded-full opacity-[0.05] blur-3xl"
-        style={{
-          background:
-            "radial-gradient(circle at center, var(--color-cream) 0%, transparent 60%)",
-        }}
-      />
+      {/* Background — mismo sistema que hero, gradientes reposicionados */}
+      <div aria-hidden className="pointer-events-none absolute inset-0 -z-10 overflow-hidden">
+        {/* Base gradient — origen abajo a la izquierda */}
+        <div
+          className="absolute inset-0"
+          style={{ background: "radial-gradient(130% 130% at 10% 90%, #0d0d0f 45%, #2a0d52 100%)" }}
+        />
+        {/* Pulse overlay */}
+        <div
+          className="absolute inset-0 opacity-35"
+          style={{
+            backgroundImage: `radial-gradient(circle, rgba(108,99,255,0.18) 0%, transparent 70%)`,
+            backgroundSize: "100% 100%",
+            animation: "aurora-pulse 14s infinite",
+          }}
+        />
+        {/* Blobs */}
+        <motion.div className="absolute inset-0 mix-blend-screen" initial={{ opacity: 0 }} whileInView={{ opacity: 1 }} viewport={{ once: true }} transition={{ duration: 1.5 }}>
+          <motion.div
+            className="absolute top-0 right-0 w-[45vw] h-[45vw] rounded-full blur-3xl opacity-[0.18]"
+            style={{ background: "#6C63FF" }}
+            animate={{ x: [20, -20, 20], y: [-20, 20, -20], scale: [1, 1.1, 1] }}
+            transition={{ duration: 38, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          />
+          <motion.div
+            className="absolute bottom-0 left-1/4 w-[35vw] h-[35vw] rounded-full blur-3xl opacity-[0.12]"
+            style={{ background: "#9B35B5" }}
+            animate={{ x: [-30, 30, -30], scale: [1, 1.15, 1] }}
+            transition={{ duration: 50, repeat: Infinity, repeatType: "mirror", ease: "easeInOut" }}
+          />
+        </motion.div>
+      </div>
 
       <div className="container-edge relative">
         {/* Eyebrow */}

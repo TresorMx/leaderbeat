@@ -276,7 +276,7 @@ export function Hero() {
             >
               <span className="w-6 h-px bg-bronze" />
               <span className="eyebrow !text-bronze !tracking-[0.25em]">
-                Real Estate · Estudio comercial
+                Sistema Comercial Inmobiliario
               </span>
             </motion.div>
 
@@ -327,7 +327,7 @@ export function Hero() {
                 esperar.
               </p>
 
-              <div className="mt-[clamp(1.25rem,3vh,2rem)] flex flex-col sm:flex-row items-center lg:items-start gap-4">
+              <div className="mt-[clamp(1.25rem,3vh,2rem)] flex flex-col sm:flex-row items-center gap-4">
                 <CTAButton href="#contacto" variant="primary">
                   Solicita tu diagnóstico
                 </CTAButton>

@@ -92,11 +92,11 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://leaderbeat.io"),
   title: {
     default:
-      "LEADERBEAT — Agencia de Marketing Digital en Cancún y México",
+      "LEADERBEAT — Sistema Comercial para Marcas Inmobiliarias | Cancún, México",
     template: "%s | LEADERBEAT.IO",
   },
   description:
-    "Agencia de marketing digital especializada en proyectos inmobiliarios en Cancún, México y US Hispanic. Marca, CRM, automatización y pauta digital para cerrar más ventas.",
+    "El sistema operativo comercial de las marcas inmobiliarias: marca, CRM, pauta y automatización operando como una sola máquina. Agencia de marketing inmobiliario en Cancún, México y US Hispanic.",
   keywords: [
     "agencia de marketing digital cancún",
     "marketing digital inmobiliario",
@@ -128,9 +128,9 @@ export const metadata: Metadata = {
     },
   },
   openGraph: {
-    title: "LEADERBEAT — Agencia de Marketing Digital en Cancún y México",
+    title: "LEADERBEAT — Sistema Comercial para Marcas Inmobiliarias",
     description:
-      "Agencia de marketing digital especializada en proyectos inmobiliarios. Marca, proceso y tecnología para cerrar más ventas. Cancún · México · US Hispanic.",
+      "Marca, proceso y tecnología para cerrar más ventas inmobiliarias. Cancún · México · US Hispanic.",
     url: "https://leaderbeat.io",
     siteName: "LEADERBEAT.IO",
     locale: "es_MX",
@@ -138,7 +138,7 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "LEADERBEAT — Agencia de Marketing Digital en Cancún y México",
+    title: "LEADERBEAT — Sistema Comercial para Marcas Inmobiliarias",
     description:
       "Sistema operativo comercial para marcas inmobiliarias modernas. Cancún · México · US Hispanic.",
   },

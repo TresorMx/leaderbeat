@@ -1,3 +1,4 @@
+import { PageWrapper } from "@/components/PageWrapper";
 import { Nav } from "@/components/Nav";
 import { Footer } from "@/components/Footer";
 import { Hero } from "@/components/sections/Hero";
@@ -19,7 +20,7 @@ const WHATSAPP_PHONE = "573000000000"; // Solo dígitos con código de país
 
 export default function Home() {
   return (
-    <>
+    <PageWrapper>
       <Nav />
       <main>
         <Hero />
@@ -38,6 +39,6 @@ export default function Home() {
       <Footer />
       <MobileBar phone={WHATSAPP_PHONE} />
       <ChatWidget whatsappPhone={WHATSAPP_PHONE} />
-    </>
+    </PageWrapper>
   );
 }

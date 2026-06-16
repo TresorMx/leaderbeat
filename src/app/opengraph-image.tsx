@@ -2,7 +2,7 @@ import { ImageResponse } from "next/og";
 
 export const runtime = "edge";
 export const alt =
-  "LEADERBEAT.IO — Agencia de Marketing Digital en Cancún y México";
+  "LEADERBEAT.IO — Sistema Comercial para Marcas Inmobiliarias | Cancún, México";
 export const size = { width: 1200, height: 630 };
 export const contentType = "image/png";
 
@@ -126,7 +126,7 @@ export default function Image() {
               letterSpacing: "0.04em",
             }}
           >
-            Agencia de Marketing Digital
+            Sistema Comercial Inmobiliario
           </div>
           <span
             style={{
